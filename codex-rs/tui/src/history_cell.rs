@@ -1,6 +1,7 @@
 use crate::diff_render::create_diff_summary;
 use crate::exec_command::relativize_to_home;
 use crate::exec_command::strip_bash_lc_and_escape;
+use crate::i18n::tr;
 use crate::markdown::append_markdown;
 use crate::slash_command::SlashCommand;
 use crate::text_formatting::format_and_truncate_tool_result;
@@ -655,10 +656,14 @@ pub(crate) fn new_status_output(
         }
     };
     if agents_list.is_empty() {
-        lines.push(Line::from("  • AGENTS files: (none)"));
+        lines.push(Line::from(format!(
+            "  • {}: {}",
+            tr("AGENTS files"),
+            tr("(none)")
+        )));
     } else {
         lines.push(Line::from(vec![
-            "  • AGENTS files: ".into(),
+            format!("  • {}: ", tr("AGENTS files")).into(),
             agents_list.join(", ").into(),
         ]));
     }
@@ -668,26 +673,33 @@ pub(crate) fn new_status_output(
     if let Ok(auth) = try_read_auth_json(&auth_file)
         && let Some(tokens) = auth.tokens.clone()
     {
-        lines.push(Line::from(vec!["👤 ".into(), "Account".bold()]));
-        lines.push(Line::from("  • Signed in with ChatGPT"));
+        lines.push(Line::from(vec!["👤 ".into(), tr("Account").bold()]));
+        lines.push(Line::from(format!("  • {}", tr("Signed in with ChatGPT"))));
 
         let info = tokens.id_token;
         if let Some(email) = &info.email {
-            lines.push(Line::from(vec!["  • Login: ".into(), email.clone().into()]));
+            lines.push(Line::from(vec![
+                format!("  • {}: ", tr("Login")).into(),
+                email.clone().into(),
+            ]));
         }
 
         match auth.openai_api_key.as_deref() {
             Some(key) if !key.is_empty() => {
-                lines.push(Line::from(
-                    "  • Using API key. Run codex login to use ChatGPT plan",
-                ));
+                lines.push(Line::from(format!(
+                    "  • {}",
+                    tr("Using API key. Run codex login to use ChatGPT plan")
+                )));
             }
             _ => {
                 let plan_text = info
                     .get_chatgpt_plan_type()
                     .map(|s| title_case(&s))
                     .unwrap_or_else(|| "Unknown".to_string());
-                lines.push(Line::from(vec!["  • Plan: ".into(), plan_text.into()]));
+                lines.push(Line::from(vec![
+                    format!("  • {}: ", tr("Plan")).into(),
+                    plan_text.into(),
+                ]));
             }
         }
 
@@ -695,28 +707,28 @@ pub(crate) fn new_status_output(
     }
 
     // 🧠 Model
-    lines.push(Line::from(vec!["🧠 ".into(), "Model".bold()]));
+    lines.push(Line::from(vec!["🧠 ".into(), tr("Model").bold()]));
     lines.push(Line::from(vec![
-        "  • Name: ".into(),
+        format!("  • {}: ", tr("Name")).into(),
         config.model.clone().into(),
     ]));
     let provider_disp = pretty_provider_name(&config.model_provider_id);
     lines.push(Line::from(vec![
-        "  • Provider: ".into(),
+        format!("  • {}: ", tr("Provider")).into(),
         provider_disp.into(),
     ]));
     // Only show Reasoning fields if present in config summary
     let reff = lookup("reasoning effort");
     if !reff.is_empty() {
         lines.push(Line::from(vec![
-            "  • Reasoning Effort: ".into(),
+            format!("  • {}: ", tr("Reasoning effort")).into(),
             title_case(&reff).into(),
         ]));
     }
     let rsum = lookup("reasoning summaries");
     if !rsum.is_empty() {
         lines.push(Line::from(vec![
-            "  • Reasoning Summaries: ".into(),
+            format!("  • {}: ", tr("Reasoning summaries")).into(),
             title_case(&rsum).into(),
         ]));
     }
@@ -724,32 +736,32 @@ pub(crate) fn new_status_output(
     lines.push(Line::from(""));
 
     // 📊 Token Usage
-    lines.push(Line::from(vec!["📊 ".into(), "Token Usage".bold()]));
+    lines.push(Line::from(vec!["📊 ".into(), tr("Token Usage").bold()]));
     if let Some(session_id) = session_id {
         lines.push(Line::from(vec![
-            "  • Session ID: ".into(),
+            format!("  • {}: ", tr("Session ID")).into(),
             session_id.to_string().into(),
         ]));
     }
     // Input: <input> [+ <cached> cached]
     let mut input_line_spans: Vec<Span<'static>> = vec![
-        "  • Input: ".into(),
+        format!("  • {}: ", tr("Input")).into(),
         usage.non_cached_input().to_string().into(),
     ];
     if let Some(cached) = usage.cached_input_tokens
         && cached > 0
     {
-        input_line_spans.push(format!(" (+ {cached} cached)").into());
+        input_line_spans.push(format!(" (+ {cached} {})", tr("cached")).into());
     }
     lines.push(Line::from(input_line_spans));
     // Output: <output>
     lines.push(Line::from(vec![
-        "  • Output: ".into(),
+        format!("  • {}: ", tr("Output")).into(),
         usage.output_tokens.to_string().into(),
     ]));
     // Total: <total>
     lines.push(Line::from(vec![
-        "  • Total: ".into(),
+        format!("  • {}: ", tr("Total")).into(),
         usage.blended_total().to_string().into(),
     ]));
 
@@ -762,16 +774,16 @@ pub(crate) fn empty_mcp_output() -> PlainHistoryCell {
         Line::from(""),
         Line::from("/mcp".magenta()),
         Line::from(""),
-        Line::from(vec!["🔌  ".into(), "MCP Tools".bold()]),
+        Line::from(vec!["🔌  ".into(), tr("MCP Tools").bold()]),
         Line::from(""),
-        Line::from("  • No MCP servers configured.".italic()),
+        Line::from(format!("  • {}", tr("No MCP servers configured.")).italic()),
         Line::from(vec![
-            "    See the ".into(),
+            format!("    {} ", tr("See the")).into(),
             Span::styled(
                 "\u{1b}]8;;https://github.com/openai/codex/blob/main/codex-rs/config.md#mcp_servers\u{7}MCP docs\u{1b}]8;;\u{7}",
                 Style::default().add_modifier(Modifier::UNDERLINED),
             ),
-            " to configure them.".into(),
+            format!(" {}", tr("to configure them.")).into(),
         ])
         .style(Style::default().add_modifier(Modifier::DIM)),
     ];
@@ -787,12 +799,14 @@ pub(crate) fn new_mcp_tools_output(
     let mut lines: Vec<Line<'static>> = vec![
         Line::from("/mcp".magenta()),
         Line::from(""),
-        Line::from(vec!["🔌  ".into(), "MCP Tools".bold()]),
+        Line::from(vec!["🔌  ".into(), tr("MCP Tools").bold()]),
         Line::from(""),
     ];
 
     if tools.is_empty() {
-        lines.push(Line::from("  • No MCP tools available.".italic()));
+        lines.push(Line::from(
+            format!("  • {}", tr("No MCP tools available.")).italic(),
+        ));
         lines.push(Line::from(""));
         return PlainHistoryCell { lines };
     }
@@ -807,7 +821,7 @@ pub(crate) fn new_mcp_tools_output(
         names.sort();
 
         lines.push(Line::from(vec![
-            "  • Server: ".into(),
+            format!("  • {}: ", tr("Server")).into(),
             server.clone().into(),
         ]));
 
@@ -815,7 +829,7 @@ pub(crate) fn new_mcp_tools_output(
             let cmd_display = format!("{} {}", cfg.command, cfg.args.join(" "));
 
             lines.push(Line::from(vec![
-                "    • Command: ".into(),
+                format!("    • {}: ", tr("Command")).into(),
                 cmd_display.into(),
             ]));
         }
@@ -826,16 +840,20 @@ pub(crate) fn new_mcp_tools_output(
             let mut env_pairs: Vec<String> = env.iter().map(|(k, v)| format!("{k}={v}")).collect();
             env_pairs.sort();
             lines.push(Line::from(vec![
-                "    • Env: ".into(),
+                format!("    • {}: ", tr("Env")).into(),
                 env_pairs.join(" ").into(),
             ]));
         }
 
         if names.is_empty() {
-            lines.push(Line::from("    • Tools: (none)"));
+            lines.push(Line::from(format!(
+                "    • {}: {}",
+                tr("Tools"),
+                tr("(none)")
+            )));
         } else {
             lines.push(Line::from(vec![
-                "    • Tools: ".into(),
+                format!("    • {}: ", tr("Tools")).into(),
                 names.join(", ").into(),
             ]));
         }
