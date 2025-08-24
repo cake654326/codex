@@ -29,6 +29,7 @@ use ratatui::widgets::Wrap;
 use crate::app_event::AppEvent;
 use crate::app_event_sender::AppEventSender;
 use crate::exec_command::strip_bash_lc_and_escape;
+use crate::i18n::tr;
 
 /// Request coming from the agent that needs user approval.
 pub(crate) enum ApprovalRequest {
@@ -340,11 +341,14 @@ impl UserApprovalWidget {
                 }
             }
             ApprovalRequest::ApplyPatch { .. } => {
-                lines.push(Line::from(format!("patch approval decision: {decision:?}")));
+                lines.push(Line::from(format!(
+                    "{}: {decision:?}",
+                    tr("patch approval decision")
+                )));
             }
         }
         if !feedback.trim().is_empty() {
-            lines.push(Line::from("feedback:"));
+            lines.push(Line::from(format!("{}:", tr("feedback"))));
             for l in feedback.lines() {
                 lines.push(Line::from(l.to_string()));
             }

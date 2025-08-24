@@ -26,6 +26,9 @@
   "Approvals panel opened": "已開啟核准面板",
   "No pending approvals": "目前沒有待核准項目",
 
+  "patch approval decision": "補丁核准決策",
+  "feedback": "回饋",
+
   "Press /mcp to manage Model Context Protocol": "輸入 /mcp 管理 MCP 連線",
   "Current model": "目前模型",
   "Model changed to {name}": "模型已切換為 {name}",
@@ -51,5 +54,31 @@
 
   "Language file reloaded": "語言檔已重新載入",
   "Failed to reload language file: {error}": "語言檔重新載入失敗：{error}",
-  "No language file configured": "尚未設定語言檔路徑"
+  "No language file configured": "尚未設定語言檔路徑",
+  "AGENTS files": "AGENTS 檔案",
+  "(none)": "（無）",
+  "Account": "帳號",
+  "Signed in with ChatGPT": "已使用 ChatGPT 登入",
+  "Login": "登入",
+  "Using API key. Run codex login to use ChatGPT plan": "使用 API key。執行 codex login 以使用 ChatGPT 方案",
+  "Plan": "方案",
+  "Model": "模型",
+  "Name": "名稱",
+  "Provider": "提供者",
+  "Reasoning summaries": "推理摘要",
+  "Token Usage": "Token 使用量",
+  "Session ID": "會話 ID",
+  "Input": "輸入",
+  "cached": "已快取",
+  "Output": "輸出",
+  "Total": "總計",
+  "MCP Tools": "MCP 工具",
+  "No MCP servers configured.": "未設定 MCP 伺服器。",
+  "See the": "請參考",
+  "to configure them.": "以進行設定。",
+  "No MCP tools available.": "無可用的 MCP 工具。",
+  "Server": "伺服器",
+  "Command": "指令",
+  "Env": "環境",
+  "Tools": "工具"
 }
