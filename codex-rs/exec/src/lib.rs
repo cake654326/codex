@@ -8,6 +8,7 @@ use std::io::Read;
 use std::path::PathBuf;
 
 pub use cli::Cli;
+pub const CODEX_JSON_ENV_VAR: &str = "CODEX_JSON";
 use codex_core::BUILT_IN_OSS_MODEL_PROVIDER_ID;
 use codex_core::ConversationManager;
 use codex_core::NewConversation;
@@ -50,6 +51,8 @@ pub async fn run_main(cli: Cli, codex_linux_sandbox_exe: Option<PathBuf>) -> any
         prompt,
         config_overrides,
     } = cli;
+
+    let json_mode = json_mode || std::env::var(CODEX_JSON_ENV_VAR).is_ok();
 
     // Determine the prompt based on CLI arg and/or stdin.
     let prompt = match prompt {
