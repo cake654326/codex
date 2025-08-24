@@ -24,6 +24,7 @@ use codex_login::AuthMode;
 use std::sync::RwLock;
 
 use crate::LoginStatus;
+use crate::i18n::tr;
 use crate::onboarding::onboarding_screen::KeyboardHandler;
 use crate::onboarding::onboarding_screen::StepStateProvider;
 use crate::shimmer::shimmer_spans;
@@ -211,7 +212,7 @@ impl AuthModeWidget {
         lines.push(
             // AE: Following styles.md, this should probably be Cyan because it's a user input tip.
             //     But leaving this for a future cleanup.
-            Line::from("  Press Enter to continue")
+            Line::from(tr("Press Enter to continue"))
                 .style(Style::default().add_modifier(Modifier::DIM)),
         );
         if let Some(err) = &self.error {
@@ -285,7 +286,7 @@ impl AuthModeWidget {
             ])
             .style(Style::default().add_modifier(Modifier::DIM)),
             Line::from(""),
-            Line::from("  Press Enter to continue").fg(Color::Cyan),
+            Line::from(tr("Press Enter to continue")).fg(Color::Cyan),
         ];
 
         Paragraph::new(lines)
