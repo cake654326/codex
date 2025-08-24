@@ -616,6 +616,7 @@ If you want to add a new feature or change the behavior of an existing one, plea
 - Create a _topic branch_ from `main` - e.g. `feat/interactive-prompt`.
 - Keep your changes focused. Multiple unrelated fixes should be opened as separate PRs.
 - Following the [development setup](#development-workflow) instructions above, ensure your change is free of lint warnings and test failures.
+- When adding or modifying translatable UI strings, follow the [i18n and UI interception guide](docs/i18n-ui-interception.md).
 
 ### Writing high-impact code changes
 
