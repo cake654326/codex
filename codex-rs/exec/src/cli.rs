@@ -55,7 +55,8 @@ pub struct Cli {
     #[arg(long = "color", value_enum, default_value_t = Color::Auto)]
     pub color: Color,
 
-    /// Print events to stdout as JSONL.
+    /// Print events to stdout as JSONL. Can also be enabled by setting the
+    /// `CODEX_JSON` environment variable.
     #[arg(long = "json", default_value_t = false)]
     pub json: bool,
 
