@@ -1,0 +1,55 @@
+{
+  "Ready": "就緒",
+  "Running": "執行中",
+  "Paused": "已暫停",
+  "Stopped": "已停止",
+  "Waiting": "等待中",
+  "Loading": "載入中",
+  "Completed": "已完成",
+  "Cancelled": "已取消",
+  "Failed": "失敗",
+  "Error": "發生錯誤",
+  "Warning": "警告",
+  "Info": "訊息",
+  "Success": "成功",
+
+  "Sign in with ChatGPT to continue.": "請先登入 ChatGPT 後繼續。",
+  "Paste an API key (or set as OPENAI_API_KEY)": "貼上 API Key（或設定 OPENAI_API_KEY）",
+  "Opening login page in your browser:": "正在瀏覽器開啟登入頁面：",
+  "Waiting for authentication… ctrl + c to quit": "等待驗證中…（Ctrl + C 以離開）",
+  "Login successful": "登入成功",
+  "Login failed": "登入失敗",
+
+  "Approve": "同意",
+  "Deny": "拒絕",
+  "This action requires your approval.": "此動作需要你的同意。",
+  "Approvals panel opened": "已開啟核准面板",
+  "No pending approvals": "目前沒有待核准項目",
+
+  "Press /mcp to manage Model Context Protocol": "輸入 /mcp 管理 MCP 連線",
+  "Current model": "目前模型",
+  "Model changed to {name}": "模型已切換為 {name}",
+
+  "Reasoning effort": "推理強度",
+  "minimal": "最小化",
+  "low": "低",
+  "medium": "中",
+  "high": "高",
+
+  "Executing command: {cmd}": "執行指令：{cmd}",
+  "Output saved to {path}": "輸出已儲存至 {path}",
+  "Command failed": "指令執行失敗",
+
+  "Network error": "網路錯誤",
+  "Timeout": "逾時",
+  "Invalid input": "輸入無效",
+
+  "Press Enter to continue": "按 Enter 繼續",
+  "Press Tab to autocomplete": "按 Tab 自動補全",
+  "Ctrl+H acts as Backspace": "Ctrl+H 可作為退格鍵",
+  "Ctrl-b / Ctrl-f to move cursor": "Ctrl-b / Ctrl-f 游標移動",
+
+  "Language file reloaded": "語言檔已重新載入",
+  "Failed to reload language file: {error}": "語言檔重新載入失敗：{error}",
+  "No language file configured": "尚未設定語言檔路徑"
+}

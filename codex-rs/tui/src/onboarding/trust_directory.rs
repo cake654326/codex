@@ -17,6 +17,7 @@ use ratatui::widgets::Paragraph;
 use ratatui::widgets::WidgetRef;
 use ratatui::widgets::Wrap;
 
+use crate::i18n::tr;
 use crate::onboarding::onboarding_screen::KeyboardHandler;
 use crate::onboarding::onboarding_screen::StepStateProvider;
 
@@ -106,7 +107,7 @@ impl WidgetRef for &TrustDirectoryWidget {
         }
         // AE: Following styles.md, this should probably be Cyan because it's a user input tip.
         //     But leaving this for a future cleanup.
-        lines.push(Line::from("  Press Enter to continue").add_modifier(Modifier::DIM));
+        lines.push(Line::from(tr("Press Enter to continue")).add_modifier(Modifier::DIM));
 
         Paragraph::new(lines)
             .wrap(Wrap { trim: false })
